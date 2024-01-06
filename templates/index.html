@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Stamp to PDF</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <!-- <link rel="stylesheet" href="style.css"> -->
+</head>
+<body>
+    <div class="container">
+        <div class="left-panel">
+            <h1>Add Stamp to PDF</h1>
+            <form method="post" enctype="multipart/form-data" class="form" id="pdfForm">
+                <label for="input_pdf">Input PDF:</label>
+                <input type="file" name="input_pdf" accept=".pdf"><br><br>
+                
+                <label for="stamp_image">Stamp Image:</label>
+                <input type="file" name="stamp_image" accept=".png, .jpg, .jpeg"><br><br>
+                
+                <label for="opacity">Opacity (0.0 - 1.0):</label>
+                <input type="number" name="opacity" step="0.01" min="0.0" max="1.0" value="0.5"><br><br>
+                
+                <input type="button" value="Add Stamp" onclick="submitForm()">
+            </form>
+        </div>
+        <div class="right-panel">
+            <h1>Output PDF</h1>
+            <iframe id="pdfViewer" style="width: 100%; height: 90%;" frameborder="0" onload="pdfLoaded()"></iframe>
+            <button id="downloadBtn" style="display: none;" onclick="downloadPdf()">Download PDF</button>
+        </div>
+        </div>
+    </div>
+    <script>
+        function submitForm() {
+            var form = document.getElementById('pdfForm');
+            var formData = new FormData(form);
+            
+            fetch('/', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.blob();
+            })
+            .then(blob => {
+                var pdfViewer = document.getElementById('pdfViewer');
+                pdfViewer.src = URL.createObjectURL(blob);
+            })
+            .catch(error => {
+                console.error('There was an error!', error);
+            });
+        }
+
+        function pdfLoaded() {
+            var pdfViewer = document.getElementById('pdfViewer');
+            var downloadBtn = document.getElementById('downloadBtn');
+            
+            if (pdfViewer.src !== 'about:blank') {
+                downloadBtn.style.display = 'block';
+            }
+        }
+
+        function downloadPdf() {
+            var pdfViewer = document.getElementById('pdfViewer');
+            var pdfSrc = pdfViewer.src;
+
+            if (pdfSrc) {
+                var a = document.createElement('a');
+                a.href = pdfSrc;
+                a.download = 'output.pdf';
+                a.click();
+            } else {
+                console.error('PDF source not found.');
+            }
+        }
+    </script>
+
+</body>
+</html>
