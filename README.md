@@ -37,3 +37,4 @@ To get started with Stampr, clone the repository and follow the setup instructio
 ---
 
 Ready to make your mark? Experience Stampr today and revolutionize document personalization!
+![Screenshot (40)](https://github.com/souviksenapati/PDF_Stamper/assets/47359760/bf27334c-405a-4d68-a143-eea7c832d743)
