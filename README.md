@@ -22,7 +22,7 @@ Join us in revolutionizing document personalization with Stampr!
 
 ## How to Use 📝
 
-1. **Upload:** Select your PDF and image files and set the stamp's opacity.
+1. **Upload:** Select your PDF and image files and set the stamp's opaacity.
 2. **Preview:** View the stamped PDF in real-time to ensure it meets your expectations.
 3. **Download:** Instantly download your personalized stamped PDF to keep or share.
 
